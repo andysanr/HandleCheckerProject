@@ -1,23 +1,42 @@
 import PySimpleGUI as sg
-import os.path
+import requests
 
 sg.theme("default1")
 
+base_urls = {
+     'FaceBook': 'https://www.facebook.com/',
+     'Instagram': 'https://www.instagram.com/',
+     'TikTok': 'https://www.tiktok.com/@',
+     'Twitter': 'https://www.twitter.com/',
+
+     'Reddit': 'https://www.reddit.com/user/',
+     'Pinterest': 'https://www.pinterest.com/',
+     'YouTube': 'https://www.youtube.com/@',
+     'Twitch': 'https://www.twitch.tv/'
+}
+
 layout = [
-    [sg.Checkbox('FaceBook', key='FaceBook')],
-    [sg.Checkbox('Instagram', key='Instagram')],
-    [sg.Checkbox('TikTok', key='TikTok')],
-    [sg.Checkbox('Twitter', key='Twitter')],
-    [sg.Checkbox('Reddit', key='Reddit')],
-    [sg.Checkbox('Pinterest', key='Pinterest')],
-    [sg.Checkbox('YouTube', key='YouTube')],
-    [sg.Checkbox('Twitch', key='Twitch')],
-    [sg.Text("Enter handle",size=(20,1))],
-    [sg.Input(size=(25, 2), key='textbox')],
+    [
+        sg.Column([
+            [sg.Checkbox('FaceBook', key='FaceBook')],
+            [sg.Checkbox('Instagram', key='Instagram')],
+            [sg.Checkbox('TikTok', key='TikTok')],
+            [sg.Checkbox('Twitter', key='Twitter')]
+        ], vertical_alignment='center', justification='center'),
+
+        sg.Column([
+            [sg.Checkbox('Reddit', key='Reddit')],
+            [sg.Checkbox('Pinterest', key='Pinterest')],
+            [sg.Checkbox('YouTube', key='YouTube')],
+            [sg.Checkbox('Twitch', key='Twitch')]
+        ], vertical_alignment='center', justification='center'),
+    ],
+    [sg.Text("Enter handle", size=(20, 1), justification='center')],
+    [sg.Input(size=(25, 2), key='textbox', justification='center')],
     [sg.Button("Search")],
 ]
 
-window = sg.Window("HandleChecker", layout, size=(300,250))
+window = sg.Window("HandleChecker", layout, size=(300,265))
 
 def print_selected(key):
         if key != 'textbox':
