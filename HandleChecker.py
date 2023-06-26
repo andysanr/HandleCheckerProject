@@ -17,23 +17,39 @@ base_urls = {
 layout = [
     [
         sg.Column([
-            [sg.Checkbox('FaceBook', key='FaceBook')],
-            [sg.Checkbox('Instagram', key='Instagram')],
-            [sg.Checkbox('TikTok', key='TikTok')],
+            [sg.Checkbox('FaceBook', key='FaceBook', font=("Monospace", 20))],
+            [sg.Checkbox('Instagram', key='Instagram', font=("Monospace", 20))],
+            [sg.Checkbox('TikTok', key='TikTok', font=("Monospace", 20))],
         ], vertical_alignment='center', justification='center'),
 
         sg.Column([
-            [sg.Checkbox('Pinterest', key='Pinterest')],
-            [sg.Checkbox('YouTube', key='YouTube')],
-            [sg.Checkbox('Twitch', key='Twitch')]
+            [sg.Checkbox('Pinterest', key='Pinterest', font=("Monospace", 20))],
+            [sg.Checkbox('YouTube', key='YouTube', font=("Monospace", 20))],
+            [sg.Checkbox('Twitch', key='Twitch', font=("Monospace", 20))],
         ], vertical_alignment='center', justification='center'),
     ],
-    [sg.Text("Enter handle", size=(20, 1), justification='center')],
-    [sg.Input(size=(25, 2), key='textbox', justification='center')],
-    [sg.Button("Search")],
+    [sg.Text("Enter handle:", size=(20, 1), justification='center', pad=((0, 0), (10, 0)), font=("Monospace", 14))],
+    [sg.Input(size=(25, 2), key='textbox', justification='center', font=("Monospace", 16))],
+    [sg.Button("Search", button_color='white', pad=((0, 0), (15,10)), font=("Monospace", 20))],
+
+    [
+        sg.Column([
+            [sg.Text('FaceBook:', font=("Monospace", 20)), sg.Text('', key='result_FaceBook', font=("Monospace", 20))],
+            [sg.Text('Instagram:', font=("Monospace", 20)), sg.Text('', key='result_Instagram', font=("Monospace", 20))],
+            [sg.Text('TikTok:', font=("Monospace", 20)), sg.Text('', key='result_TikTok', font=("Monospace", 20))],
+            [sg.Text('Pinterest:', font=("Monospace", 20)), sg.Text('', key='result_Pinterest', font=("Monospace", 20))],
+            [sg.Text('YouTube:', font=("Monospace", 20)), sg.Text('', key='result_YouTube', font=("Monospace", 20))],
+            [sg.Text('Twitch:', font=("Monospace", 20)), sg.Text('', key='result_Twitch', font=("Monospace", 20))],
+        ], vertical_alignment='center', justification='left'),
+    ],
+    
 ]
 
-window = sg.Window("HandleChecker", layout, size=(300,265))
+window = sg.Window("HandleChecker", layout, size=(300,465), element_justification='center')
+
+
+
+
 
 def checkhandle(handle, key):
     url = base_urls[key] + handle   
@@ -66,11 +82,12 @@ def checkhandle(handle, key):
 
 def print_selected(key):
     handle = values['textbox']
+    result_key = f'result_{key}'
     if key != 'textbox':
         if checkhandle(handle, key):
-            print(f"Handle '{handle}' is available on {key}")
+            window[result_key].update('✓')
         else:
-            print(f"Handle '{handle}' is not available on {key}")
+            window[result_key].update('✗')
 
             
 
